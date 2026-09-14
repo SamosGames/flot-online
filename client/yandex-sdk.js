@@ -8,22 +8,50 @@
 
     // kodiak discovers the websocket host from the response URL of /system.json.
     // A Yandex package is static, so a staging origin can be supplied explicitly.
-    const serverOrigin = window.__MK48_SERVER_ORIGIN || params.get("server_origin");
+    const serverOrigin = window.__FLOT_ONLINE_SERVER_ORIGIN || params.get("server_origin");
+    const nativeFetch = window.fetch.bind(window);
+    let serverUrl;
     if (serverOrigin) {
         try {
-            const origin = new URL(serverOrigin, window.location.href).origin;
-            const nativeFetch = window.fetch.bind(window);
-            window.fetch = (input, init) => {
-                const requested = typeof input === "string" ? input : input?.url;
-                if (!requested) return nativeFetch(input, init);
-                const url = new URL(requested, window.location.href);
-                if (url.pathname !== "/system.json" && url.pathname !== "/translation.json") {
-                    return nativeFetch(input, init);
-                }
-                return nativeFetch(`${origin}${url.pathname}${url.search}`, init);
-            };
+            serverUrl = new URL(serverOrigin, window.location.href).origin;
         } catch (error) {
-            console.warn("Invalid MK48 server origin:", error);
+            console.warn("Invalid SamosGames server origin:", error);
+        }
+    }
+
+    // Keep the Russian package self-contained: Yandex does not need the
+    // infrastructure translation service just to render the first screen.
+    window.fetch = (input, init) => {
+        const requested = typeof input === "string" ? input : input?.url;
+        if (!requested) return nativeFetch(input, init);
+        const url = new URL(requested, window.location.href);
+        if (url.pathname === "/translation.json" && url.searchParams.get("language_id") === "ru") {
+            return nativeFetch("/data/translation.ru.json", init);
+        }
+        if (serverUrl && url.pathname === "/system.json") {
+            return nativeFetch(`${serverUrl}${url.pathname}${url.search}`, init);
+        }
+        if (serverUrl && url.pathname === "/translation.json") {
+            return nativeFetch(`${serverUrl}${url.pathname}${url.search}`, init);
+        }
+        return nativeFetch(input, init);
+    };
+
+    if (isYandex) {
+        // Kodiak uses navigator.language for the first saved preference.
+        // The language picker can still change it afterwards.
+        try {
+            Object.defineProperty(window.navigator, "language", {
+                configurable: true,
+                get: () => "ru-RU",
+            });
+            Object.defineProperty(window.navigator, "languages", {
+                configurable: true,
+                get: () => ["ru-RU", "ru"],
+            });
+            document.documentElement.lang = "ru";
+        } catch (error) {
+            console.warn("Unable to set Russian default locale:", error);
         }
     }
 
@@ -57,7 +85,7 @@
 
     function enableAds() {
         loadSdk().then((ysdk) => {
-            window.__mk48YandexSdk = ysdk;
+            window.__flotOnlineYandexSdk = ysdk;
             const language = ysdk.environment?.i18n?.lang;
             if (language) document.documentElement.lang = language;
             notify("enableInterstitialAds");

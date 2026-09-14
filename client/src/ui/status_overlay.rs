@@ -97,7 +97,6 @@ pub fn status_overlay(props: &StatusProps) -> Html {
 
     let t = use_translator();
     let status = &props.status;
-    let data: &'static EntityData = props.status.entity_type.data();
     let ui_event_callback = use_ui_event_callback::<Mk48Game>();
     let select_factory = {
         let ui_event_callback = ui_event_callback.clone();
@@ -110,7 +109,7 @@ pub fn status_overlay(props: &StatusProps) -> Html {
 
     html! {<>
         <p style="margin: 0; margin-bottom: 0.5rem; font-family: monospace, sans-serif;">
-            {data.label.replace(" ", "\u{00A0}")}
+            {t.entity_label(status.entity_type).replace(" ", "\u{00A0}")}
             {" "}
             {format!("{:\u{00A0}>4.1}kn", status.velocity.to_knots())}
             {" "}

@@ -90,7 +90,7 @@ fn entity_card(
             <tr>
                 <td>
                     <h3>
-                        {data.label}
+                        {t.entity_label(entity_type)}
                         if let Some(count) = count {
                             {format!(" × {count}")}
                         }

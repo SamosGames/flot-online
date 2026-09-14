@@ -39,7 +39,7 @@ pub fn mk48_ui(props: &PropertiesWrapper<UiProps>) -> Html {
     let gctw = use_gctw::<Mk48Game>();
     let banner_ad = use_banner_ad();
     let splash_social_media_props =
-        SplashSocialMediaProps::default().github("https://github.com/SamosGames/mk48");
+        SplashSocialMediaProps::default().github("https://github.com/SamosGames/flot-online");
     let on_play = gctw.send_ui_event_callback.reform(|alias| UiEvent::Spawn {
         alias,
         entity_type: EntityType::G5,

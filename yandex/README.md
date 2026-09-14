@@ -4,7 +4,7 @@
 
 - русские title/description/keywords, `manifest.json` и help/about;
 - Яндекс SDK: fullscreen-реклама после поражения, rewarded-реклама для добровольной разблокировки Skjold и баннер только на экранах входа/возрождения;
-- русский загрузочный экран с текущими игровыми fallback-ассетами;
+- русский загрузочный экран, новый логотип и branded PNG/SVG-ассеты без старого названия;
 - `publication.json` и скрипт сборки архива.
 
 ## Обязательный серверный шаг
@@ -34,12 +34,10 @@
 
 ## Ассеты
 
-GPT Image 2 промпты сохранены в `yandex/image-prompts.jsonl`, но текущий локальный `OPENAI_API_KEY` отклонён API (401). После обновления ключа выполните:
+В `yandex/image-prompts.jsonl` сохранены промпты для GPT Image 2. Текущий локальный `OPENAI_API_KEY` отклонён API (401), поэтому пакет уже содержит локальные векторные fallback-ассеты. После обновления ключа можно заменить их результатами GPT Image 2:
 
 ```bash
 python3 /Users/vlad/.codex/skills/.system/imagegen/scripts/image_gen.py generate-batch \
   --input yandex/image-prompts.jsonl --out-dir client/data --concurrency 3
 ./yandex/package.sh
 ```
-
-До этого архив использует существующие корабельные изображения из `client/data/`; новые icon/cover/loading-файлы нельзя считать готовыми.

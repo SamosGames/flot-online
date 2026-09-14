@@ -7,6 +7,7 @@ use kodiak_client::{translate, PlayerAlias, RewardedAd, Translator};
 use std::fmt::Display;
 
 pub trait Mk48Phrases {
+    fn entity_label(&self, entity_type: EntityType) -> String;
     fn entity_kind_name(&self, kind: EntityKind, sub_kind: EntitySubKind) -> String;
     fn entity_kind_hint(&self, kind: EntityKind, sub_kind: EntitySubKind) -> String;
     fn _rewarded_ad(&self, rewarded_ad: &RewardedAd) -> String;
@@ -26,6 +27,19 @@ pub trait Mk48Phrases {
 }
 
 impl Mk48Phrases for Translator {
+    fn entity_label(&self, entity_type: EntityType) -> String {
+        match entity_type {
+            EntityType::Barrel => translate!(self, "barrel"),
+            EntityType::Coin => translate!(self, "coin"),
+            EntityType::Crate => translate!(self, "crate"),
+            EntityType::Scrap => translate!(self, "scrap"),
+            EntityType::Tanker => translate!(self, "oil tanker"),
+            EntityType::Hq => translate!(self, "headquarters"),
+            EntityType::OilPlatform => translate!(self, "oil platform"),
+            _ => entity_type.data().label.to_owned(),
+        }
+    }
+
     fn entity_kind_name(&self, kind: EntityKind, sub_kind: EntitySubKind) -> String {
         match (kind, sub_kind) {
             (EntityKind::Aircraft, EntitySubKind::Heli) => {
@@ -232,7 +246,7 @@ impl Mk48Phrases for Translator {
     }
 
     fn death_reason_obstacle(&self, entity_type: EntityType) -> String {
-        self.death_reason_collision(&entity_type.data().label)
+        self.death_reason_collision(self.entity_label(entity_type))
     }
 
     fn death_reason_weapon(&self, alias: PlayerAlias, entity_type: EntityType) -> String {

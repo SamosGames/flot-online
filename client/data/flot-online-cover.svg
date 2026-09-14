@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Флот Онлайн — морской бой</title>
+  <desc id="desc">Стилизованный боевой корабль на тёмном море с названием игры.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071a36"/>
+      <stop offset="0.55" stop-color="#075276"/>
+      <stop offset="1" stop-color="#06233f"/>
+    </linearGradient>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#b9e6f2"/>
+      <stop offset="0.18" stop-color="#4d91ac"/>
+      <stop offset="1" stop-color="#102e4f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#51e1e8"/>
+      <stop offset="1" stop-color="#ffd166"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="10" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <circle cx="1050" cy="150" r="170" fill="#51e1e8" opacity=".1"/>
+  <circle cx="1050" cy="150" r="105" fill="none" stroke="#51e1e8" stroke-width="2" opacity=".25"/>
+  <circle cx="1050" cy="150" r="50" fill="none" stroke="#51e1e8" stroke-width="2" opacity=".35"/>
+  <path d="M0 560 Q170 500 340 560 T680 560 T1020 560 T1360 560 V720 H0Z" fill="#061b35"/>
+  <path d="M0 610 Q160 560 320 610 T640 610 T960 610 T1280 610" fill="none" stroke="#2bb4c0" stroke-width="12" opacity=".35"/>
+  <path d="M0 665 Q160 615 320 665 T640 665 T960 665 T1280 665" fill="none" stroke="#51e1e8" stroke-width="5" opacity=".55"/>
+  <g transform="translate(130 255)">
+    <path d="M40 210 L110 285 H735 L850 210 Z" fill="url(#hull)" stroke="#061b35" stroke-width="12"/>
+    <path d="M165 200 L210 90 H630 L715 200 Z" fill="#9bd7e5" stroke="#061b35" stroke-width="12"/>
+    <path d="M265 90 V30 H575 V90" fill="#4d91ac" stroke="#061b35" stroke-width="12"/>
+    <path d="M320 30 V-40 H520 V30" fill="#b9e6f2" stroke="#061b35" stroke-width="12"/>
+    <path d="M360 -40 V-95 H480 V-40" fill="#4d91ac" stroke="#061b35" stroke-width="12"/>
+    <path d="M260 158 H620" stroke="#061b35" stroke-width="15"/>
+    <path d="M345 110 V200 M440 110 V200 M535 110 V200" stroke="#061b35" stroke-width="8" opacity=".8"/>
+    <path d="M195 205 H695" stroke="url(#accent)" stroke-width="12"/>
+    <path d="M705 110 L840 20 M730 135 L875 45" stroke="#d7f8ff" stroke-width="16" stroke-linecap="round" opacity=".85"/>
+    <circle cx="315" cy="210" r="30" fill="#ffd166" stroke="#061b35" stroke-width="10"/>
+    <circle cx="570" cy="210" r="30" fill="#ffd166" stroke="#061b35" stroke-width="10"/>
+    <path d="M390 285 H650" stroke="#51e1e8" stroke-width="8" opacity=".75"/>
+  </g>
+  <g fill="#fff" font-family="sans-serif" text-anchor="start">
+    <text x="72" y="106" font-size="30" letter-spacing="8" fill="#9bd7e5">SAMOSGAMES</text>
+    <text x="70" y="175" font-size="72" font-weight="700" letter-spacing="3">ФЛОТ ОНЛАЙН</text>
+    <text x="76" y="218" font-size="25" letter-spacing="4" fill="#ffd166">МОРСКОЙ БОЙ В БРАУЗЕРЕ</text>
+  </g>
+</svg>

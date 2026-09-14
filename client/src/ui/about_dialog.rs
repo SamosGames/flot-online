@@ -4,8 +4,8 @@
 use crate::ui::Mk48Route;
 use common::entity::{EntityData, EntityKind, EntityType};
 use kodiak_client::{
-    markdown, translated_text, use_features, use_game_constants, use_translator, EngineNexus, Link,
-    MarkdownOptions, NexusDialog, RouteLink,
+    markdown, use_features, use_game_constants, use_translator, EngineNexus, Link, MarkdownOptions,
+    NexusDialog, RouteLink,
 };
 use std::collections::HashSet;
 use yew::{function_component, html, Html};
@@ -17,7 +17,7 @@ pub fn about_dialog() -> Html {
     let features = use_features();
     let credits = features.outbound.credits;
 
-    let md = translated_text!(t, "about_md");
+    let md = include_str!("./translations/about/ru.md");
     let components = Box::new(move |href: &str, content: &str| match href {
         "/ships/" => Some({
             let boat_type_count = EntityType::iter()

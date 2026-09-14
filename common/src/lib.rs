@@ -15,10 +15,10 @@ extern crate test;
 
 pub const MK48_CONSTANTS: &'static GameConstants = &GameConstants {
     game_id: "Mk48",
-    name: "Mk48.io",
+    name: "Флот Онлайн",
     domain: "mk48.io",
     geodns_enabled: true,
-    trademark: "Mk48.io",
+    trademark: "Флот Онлайн",
     server_names: &[
         "Atlantic", "Pacific", "Fjord", "Kraken", "Scotia", "Barents", "Bering", "Chukchi",
     ],

@@ -69,7 +69,7 @@ pub fn sprite(props: &SpriteProps) -> Html {
     let title = props.title.clone().unwrap_or_else(|| {
         format!(
             "{} ({})",
-            data.label,
+            t.entity_label(props.entity_type),
             t.entity_kind_name(data.kind, data.sub_kind)
         )
         .into()

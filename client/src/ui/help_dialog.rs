@@ -3,8 +3,7 @@
 
 use crate::ui::Mk48Route;
 use kodiak_client::{
-    markdown, translated_text, use_game_constants, use_translator, MarkdownOptions, NexusDialog,
-    RouteLink,
+    markdown, use_game_constants, use_translator, MarkdownOptions, NexusDialog, RouteLink,
 };
 use yew::{function_component, html, Html};
 
@@ -12,7 +11,7 @@ use yew::{function_component, html, Html};
 pub fn help_dialog() -> Html {
     let t = use_translator();
     let game_constants = use_game_constants();
-    let md = translated_text!(t, "help_md");
+    let md = include_str!("./translations/help/ru.md");
     let components = Box::new(|href: &str, content: &str| {
         if href == "/ships/" {
             Some(html! {
