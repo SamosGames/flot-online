@@ -1,0 +1,14 @@
+{
+  "title": "Флот Онлайн — морской бой",
+  "short_description": "Многопользовательский морской бой: собирайте ящики, улучшайте корабль и топите соперников.",
+  "language": "ru",
+  "orientation": "landscape",
+  "platforms": ["desktop", "mobile"],
+  "package": "yandex-games.zip",
+  "server_origin": "REQUIRED_BEFORE_UPLOAD",
+  "ads": {
+    "interstitial": "after_death_before_respawn",
+    "rewarded": "optional_skjold_unlock",
+    "banner": "spawn_and_respawn_only"
+  }
+}

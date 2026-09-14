@@ -3,13 +3,14 @@
 
 use crate::game::Mk48Game;
 use crate::ui::sprite::Sprite;
+use crate::ui::Mk48Phrases;
 use common::entity::{EntitySubKind, EntityType};
 use common::util::score_to_level;
 use common::world::outside_strict_area;
 use kodiak_client::glam::Vec2;
 use kodiak_client::{
-    translate, use_core_state, use_translator, GameClient, Position, RankNumber, Section,
-    SectionArrow, Translator,
+    translate, use_core_state, use_rewarded_ad, use_translator, GameClient, Position, RankNumber,
+    RewardedAd, Section, SectionArrow, Translator,
 };
 use std::collections::HashMap;
 use stylist::yew::styled_component;
@@ -92,7 +93,7 @@ pub fn ship_menu(props: &ShipMenuProps) -> Html {
     let level = use_state_eq(|| max_level);
     let locker = use_state(Locker::default);
     let t = use_translator();
-    //let rewarded_ad = use_rewarded_ad();
+    let rewarded_ad = use_rewarded_ad();
 
     if min_level > max_level {
         // There are no choices now. This is possible for upgrade menu, but not spawn menu.
@@ -113,7 +114,7 @@ pub fn ship_menu(props: &ShipMenuProps) -> Html {
                 props.entity.map(|(_, position)| position),
                 &t,
                 rank,
-                /* &rewarded_ad, */
+                &rewarded_ad,
             ) {
                 Err(lock_icon)
             } else {
@@ -133,8 +134,15 @@ pub fn ship_menu(props: &ShipMenuProps) -> Html {
 
     let attempt_to_unlock_factory = |entity_type: EntityType| -> Callback<MouseEvent> {
         let locker = locker.clone();
+        let rewarded_ad = rewarded_ad.clone();
         Callback::from(move |_: MouseEvent| {
-            locker.set(locker.attempt_to_unlock(entity_type, rank));
+            if entity_type == EntityType::Skjold {
+                if let RewardedAd::Available { request } = &rewarded_ad {
+                    request.emit(None);
+                }
+            } else {
+                locker.set(locker.attempt_to_unlock(entity_type, rank));
+            }
         })
     };
 
@@ -218,7 +226,7 @@ impl Locker {
         position: Option<Vec2>,
         t: &Translator,
         rank: Option<RankNumber>,
-        /* rewarded_ad: &RewardedAd, */
+        rewarded_ad: &RewardedAd,
     ) -> Option<(IconId, String)> {
         let attempts = self.attempts.get(&entity_type).cloned().unwrap_or_default();
         let rank_required = Self::rank_required(entity_type);
@@ -248,19 +256,14 @@ impl Locker {
                     ))
                 },
             ))
-        }
-        /* else if matches!(entity_type, EntityType::Skjold)
+        } else if matches!(entity_type, EntityType::Skjold)
             && !matches!(
                 rewarded_ad,
                 RewardedAd::Unavailable | RewardedAd::Watched { .. }
             )
         {
-            Some((
-                IconId::OcticonsVideo16,
-                "Watch video ad on the splash screen or respawn screen to unlock this ship",
-            ))
-        } */
-        else {
+            Some((IconId::OcticonsVideo16, t._rewarded_ad(rewarded_ad)))
+        } else {
             None
         }
     }

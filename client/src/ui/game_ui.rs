@@ -22,10 +22,11 @@ use common::velocity::Velocity;
 use kodiak_client::glam::Vec2;
 use kodiak_client::yew_router::Routable;
 use kodiak_client::{
-    splash_links, splash_nexus_icons, splash_sign_in_link, splash_social_media, translate, use_ctw,
-    use_gctw, ChatOverlay, ClientContext, GameClient, Instruction, LeaderboardOverlay, PathParam,
-    PlayerAlias, PlayerId, Position, Positioner, PropertiesWrapper, RoutableExt, SmolRoutable,
-    SpawnOverlay, SplashNexusIconsProps, SplashSocialMediaProps, TeamId, Translator,
+    post_message, splash_links, splash_nexus_icons, splash_sign_in_link, splash_social_media,
+    translate, use_banner_ad, use_ctw, use_gctw, BannerAd, ChatOverlay, ClientContext, GameClient,
+    Instruction, LeaderboardOverlay, PathParam, PlayerAlias, PlayerId, Position, Positioner,
+    PropertiesWrapper, RoutableExt, SmolRoutable, SpawnOverlay, SplashNexusIconsProps,
+    SplashSocialMediaProps, TeamId, Translator,
 };
 use std::collections::HashMap;
 use stylist::yew::styled_component;
@@ -36,9 +37,9 @@ pub fn mk48_ui(props: &PropertiesWrapper<UiProps>) -> Html {
     let ctw = use_ctw();
     let nexus = ctw.escaping.is_escaping();
     let gctw = use_gctw::<Mk48Game>();
-    let splash_social_media_props = SplashSocialMediaProps::default()
-        .github("https://github.com/SoftbearStudios/mk48")
-        .google_play("https://play.google.com/store/apps/details?id=com.softbear.mk48");
+    let banner_ad = use_banner_ad();
+    let splash_social_media_props =
+        SplashSocialMediaProps::default().github("https://github.com/SamosGames/mk48");
     let on_play = gctw.send_ui_event_callback.reform(|alias| UiEvent::Spawn {
         alias,
         entity_type: EntityType::G5,
@@ -46,6 +47,24 @@ pub fn mk48_ui(props: &PropertiesWrapper<UiProps>) -> Html {
 
     let margin = "0.5rem";
     let status = props.status.clone();
+    let show_banner = matches!(&status, UiStatus::Spawning | UiStatus::Respawning(_));
+
+    {
+        let banner_ad = banner_ad.clone();
+        use_effect_with(
+            (show_banner, banner_ad.clone()),
+            move |(show_banner, banner_ad)| {
+                if *show_banner {
+                    if let BannerAd::Available { request } = banner_ad {
+                        request.emit(());
+                    }
+                } else {
+                    post_message("hideBannerAd");
+                }
+                || ()
+            },
+        );
+    }
 
     const SHOOT_HINT: &str = "First, select an available weapon. Then, click in the direction to fire. If you hold the click for too long, you won't shoot.";
     const HINTS: &[(&str, &[&str])] = &[

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" translate="no">
+<html lang="ru" translate="no">
 <head>
     <!--
         SPDX-FileCopyrightText: 2024 Softbear, Inc.
@@ -8,17 +8,17 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no">
-    <title>mk48.io</title>
-    <meta name="description" content="Mk48.io is a multiplayer ship combat game. It is free to play online in a web browser with no install required. Start with a small warship and defeat rival players or collect floating barrels to earn upgrades to increasingly larger battleships, submarines, and aircraft carriers. Avoid torpedos and incoming shells. Team and chat with other players.">
-    <meta name="keywords" content="game, ship, submarine, torpedo, multiplayer, free">
+    <title>Флот Онлайн — морской бой</title>
+    <meta name="description" content="Онлайн-морской бой: управляйте кораблём, собирайте ящики, улучшайтесь и топите соперников.">
+    <meta name="keywords" content="морской бой, корабли, подводная лодка, торпеды, онлайн игра, флот">
     <meta name="theme-color" content="#00487d">
-    <meta property="og:title" content="mk48.io"/>
-    <meta name="og:description" content="Mk48.io is a multiplayer ship combat game. It is free to play online in a web browser with no install required. Start with a small warship and defeat rival players or collect floating barrels to earn upgrades to increasingly larger battleships, submarines, and aircraft carriers. Avoid torpedos and incoming shells. Team and chat with other players.">
+    <meta property="og:title" content="Флот Онлайн — морской бой"/>
+    <meta name="og:description" content="Онлайн-морской бой: управляйте кораблём, собирайте ящики и топите соперников.">
     <meta property="og:type" content="website"/>
-    <meta property="og:image" content="https://mk48.io/data/256x256.png"/>
-    <link rel="canonical" href="https://mk48.io/">
+    <meta property="og:image" content="/data/1280x720.png"/>
     <link data-trunk rel="icon" type="image/png" href="/data/favicon.png">
     <link rel="manifest" href="/data/manifest.json">
+    <script data-trunk src="yandex-sdk.js"></script>
     <script>
         function request_pointer_lock_with_unadjusted_movement(e) {
             const promise = e.requestPointerLock({unadjustedMovement: true});
@@ -54,6 +54,11 @@
                 if (document.getElementById("canvas")) {
                     // Loaded.
                     clearInterval(interval);
+                    const boot = document.getElementById("mk48_boot");
+                    if (boot) {
+                        boot.classList.add("mk48_boot_hidden");
+                        setTimeout(() => boot.remove(), 300);
+                    }
                     if (warning && warning.style) {
                         warning.style.display = "none";
                     }
@@ -70,9 +75,21 @@
     </script>
 </head>
 <body style="background-color: #00487d;" onload="startLoadInterval()">
+    <div id="mk48_boot" role="status" aria-live="polite">
+        <div id="mk48_boot_card">
+            <strong>ФЛОТ ОНЛАЙН</strong>
+            <span>Подготовка к бою…</span>
+        </div>
+    </div>
     <div id="load_warning" style="display: none; font-family: sans-serif; padding: 1rem; color: white; position: absolute; left: 50%; text-align: center; top: 50%; transform: translate(-50%, -50%);">
         <h2 style="margin-top: 0;" id="load_warning_text"></h2>
         <button onclick="window.location.reload()" style="width: 10rem; height: 3rem; border-radius: 0.5rem; background-color: #505050; border: 2px solid #606060; color: white; font-size: 1.2rem; cursor: pointer;">Click to retry</button>
     </div>
+    <style>
+        #mk48_boot { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: linear-gradient(180deg, rgba(0, 35, 63, .2), rgba(0, 13, 25, .78)), url("/data/loading-1280x720.png") center / cover, url("/data/1280x720.png") center / cover; transition: opacity .25s ease; }
+        #mk48_boot_card { display: grid; gap: .35rem; padding: 1rem 1.35rem; border: 1px solid rgba(255, 255, 255, .35); border-radius: .65rem; color: #fff; background: rgba(0, 29, 52, .72); box-shadow: 0 .8rem 3rem rgba(0, 0, 0, .35); font: 600 1.05rem/1.2 system-ui, sans-serif; text-align: center; }
+        #mk48_boot_card span { color: #cde7f8; font-size: .85rem; font-weight: 400; }
+        .mk48_boot_hidden { opacity: 0; pointer-events: none; }
+    </style>
 </body>
 </html>
