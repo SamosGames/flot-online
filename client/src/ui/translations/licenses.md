@@ -1,5 +1,5 @@
-# Open Source Software
-The game would not exist without free and open source software.
+# Открытое программное обеспечение
+Игра существует благодаря свободному программному обеспечению с открытым исходным кодом.
 
 ## (Apache-2.0 OR MIT) AND BSD-3-Clause
 * encoding_rs

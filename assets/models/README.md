@@ -1,7 +1,7 @@
-Models are based on real military designs. We thank the following illustrators, photographers,
-community members, and organizations for making references and models freely available.
+Модели основаны на реальных военных конструкциях. Благодарим иллюстраторов, фотографов,
+участников сообщества и организации, которые открыто предоставили справочные материалы и модели.
 
-# CC BY SA 4.0
+# CC BY-SA 4.0
 * [Mark 7](https://en.m.wikipedia.org/wiki/File:USS_Iowa_gun_load.jpg) by JamesMadison
 * [Harpoon](https://en.m.wikipedia.org/wiki/File:AGM-84A_HARPOON.png) by Tdhla1
 * [Harbin](https://en.m.wikipedia.org/wiki/File:Eurocopter_MH-65_Dolphin_orthographical_image.svg) by Fox 52
@@ -10,7 +10,7 @@ community members, and organizations for making references and models freely ava
 # CC BY 4.0
 - Hsiung Feng II model by DUCK!!!
 
-# CC BY SA 3.0
+# CC BY-SA 3.0
 * [Clemenceau](https://en.m.wikipedia.org/wiki/File:FS_Clem_plan1.jpg) by NetMarine
 * [Yamato](https://en.wikipedia.org/wiki/File:Yamato1945.png) by Alexpl
 * [Dreadnought](https://en.m.wikipedia.org/wiki/File:HMS_Dreadnought_(1911\)_profile_drawing.png) by Andrew Arthur
@@ -30,12 +30,12 @@ community members, and organizations for making references and models freely ava
 * [Bismarck](https://commons.wikimedia.org/wiki/File:Battleship_Bismark.svg) by Carlos Harner
 * [Walrus](https://en.m.wikipedia.org/wiki/File:Supermarin_Walrus_3-view.svg) by Maxrossomachin
 
-# Disclaimed copyright
+# Авторские права не заявлены
 * [Olympias](https://commons.wikimedia.org/wiki/File:Olympias.1.JPG?uselang=en) by Χρήστης
 * [NSM](https://commons.wikimedia.org/wiki/File:Naval_Strike_Missile_(NSM\)_2.jpg) by Peterdx
 * [OF45](https://en.defence-ua.com/media/contentimages/01e64d555604fd13.jpg) via defense-ua.com
 
-# Public domain (US Government)
+# Общественное достояние (правительство США)
 * [Mark 9](https://maritime.org/doc/depthcharge9/index.php#pg12) courtesy of Ed Zajkowksi
 * [Mark 18](https://commons.wikimedia.org/wiki/File:Mark_18_torpedo_general_profile,_US_Navy_Torpedo_Mark_18_(Electric\),_April_1943.jpg)
 * [Mark 54](https://en.m.wikipedia.org/wiki/File:USS_Roosevelt_(DDG-80\)_launches_Mk_54_torpedo_in_April_2014.JPG) by Mass Communication Specialist 2nd Class Justin Wolpert
@@ -44,5 +44,5 @@ community members, and organizations for making references and models freely ava
 * [UH-60](https://commons.wikimedia.org/wiki/File:Sikorsky_UH-60_Black_Hawk_dimensions.png) via Casito
 * [Avenger](https://commons.wikimedia.org/wiki/File:General_Motors_TBM-3S_Avenger_3-side-view_Blueprint.png) by Bureau of Aeronautics
 
-# Public domain (expired copyright)
+# Общественное достояние (срок авторских прав истёк)
 * [Espana](https://en.wikipedia.org/wiki/File:Espana_class_line-drawing,_Brassey_1911.png) by Sydney Walker Barnaby

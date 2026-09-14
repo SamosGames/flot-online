@@ -40,10 +40,17 @@ pub fn mk48_ui(props: &PropertiesWrapper<UiProps>) -> Html {
     let banner_ad = use_banner_ad();
     let splash_social_media_props =
         SplashSocialMediaProps::default().github("https://github.com/SamosGames/flot-online");
-    let on_play = gctw.send_ui_event_callback.reform(|alias| UiEvent::Spawn {
-        alias,
-        entity_type: EntityType::G5,
-    });
+    let on_play = gctw
+        .send_ui_event_callback
+        .reform(|alias: PlayerAlias| UiEvent::Spawn {
+            // Kodiak's generated guest names are English; keep the Russian product's default name Russian.
+            alias: if alias.as_str().to_ascii_lowercase().contains("guest") {
+                PlayerAlias::new_input_sanitized("Кузя")
+            } else {
+                alias
+            },
+            entity_type: EntityType::G5,
+        });
 
     let margin = "0.5rem";
     let status = props.status.clone();

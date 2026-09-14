@@ -1,8 +1,8 @@
-# Sound Credits
+# Авторы звуков
 
-Sounds are either licensed under CC0/public domain or via transfer of Copyright.
+Звуки распространяются по CC0, находятся в общественном достоянии или переданы правообладателями.
 
-**Warning: Sounds in this directory are unprocessed and potentially very loud!**
+**Внимание: звуки в этой папке не обработаны и могут быть очень громкими!**
 
  - [aa](https://freesound.org/people/PicassoCT/sounds/260939/) by PicassoCT
  - achievement by [Tim Beek](https://timbeek.com)

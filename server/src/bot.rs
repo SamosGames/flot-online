@@ -16,8 +16,13 @@ use kodiak_server::rand::rngs::ThreadRng;
 use kodiak_server::rand::seq::IteratorRandom;
 use kodiak_server::rand::{thread_rng, Rng};
 use kodiak_server::{
-    gen_radius, random_bot_name, ArenaService, ArenaSettingsDto, BotAction, Player, PlayerId,
+    gen_radius, ArenaService, ArenaSettingsDto, BotAction, Player, PlayerAlias, PlayerId,
 };
+
+const RUSSIAN_BOT_NAMES: &[&str] = &[
+    "Кузя", "Боря", "Витя", "Жора", "Миша", "Федя", "Сева", "Лёня", "Толя", "Гоша", "Олег", "Яша",
+    "Паша", "Даша", "Коля", "Саша",
+];
 
 /// Bot implements a ship-controlling AI that is, in many ways, equivalent to a player.
 #[derive(Debug)]
@@ -351,7 +356,9 @@ impl Bot {
             BotAction::Quit
         } else {
             BotAction::Some(Command::Spawn(Spawn {
-                alias: Some(random_bot_name()),
+                alias: Some(PlayerAlias::new_unsanitized(
+                    RUSSIAN_BOT_NAMES.iter().choose(&mut rng).copied().unwrap(),
+                )),
                 entity_type: EntityType::spawn_options(0, true)
                     .choose(&mut rng)
                     .expect("there must be at least one entity type to spawn as"),

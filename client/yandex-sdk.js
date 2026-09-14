@@ -5,6 +5,7 @@
     const host = window.location.hostname;
     const params = new URLSearchParams(window.location.search);
     const isYandex = host.includes("yandex") || params.has("yandex");
+    const isRussianProduct = true;
 
     // kodiak discovers the websocket host from the response URL of /system.json.
     // A Yandex package is static, so a staging origin can be supplied explicitly.
@@ -25,7 +26,7 @@
         const requested = typeof input === "string" ? input : input?.url;
         if (!requested) return nativeFetch(input, init);
         const url = new URL(requested, window.location.href);
-        if (url.pathname === "/translation.json" && url.searchParams.get("language_id") === "ru") {
+        if (url.pathname === "/translation.json" && isRussianProduct) {
             return nativeFetch("/data/translation.ru.json", init);
         }
         if (serverUrl && url.pathname === "/system.json") {
@@ -37,7 +38,48 @@
         return nativeFetch(input, init);
     };
 
-    if (isYandex) {
+    function installRussianUiBridge() {
+        if (window.__flotOnlineRussianUiObserver) return;
+
+        const replacements = new Map([
+            ["Ad Privacy", "Настройки рекламы"],
+            ["By changing settings, you consent to cookies being stored in accordance with our ", "Изменяя настройки, вы соглашаетесь на сохранение cookie в соответствии с нашей "],
+            ["privacy policy", "политикой конфиденциальности"],
+            ["Loading regions...", "Загрузка регионов..."],
+            ["-- Other --", "-- Другое --"],
+            ["Unknown server", "Неизвестный сервер"],
+            ["Refresh", "Обновить"],
+            ["Necessary cookies only", "Только необходимые cookie"],
+            ["Allow all cookies", "Разрешить все cookie"],
+            ["Automated help: ", "Автопомощь: "],
+            ["Local", "Локальный"],
+        ]);
+
+        const translateNode = (node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                let text = node.nodeValue;
+                for (const [from, to] of replacements) text = text.replaceAll(from, to);
+                if (text !== node.nodeValue) node.nodeValue = text;
+                return;
+            }
+            for (const child of node.childNodes || []) translateNode(child);
+        };
+
+        translateNode(document.documentElement);
+        window.__flotOnlineRussianUiObserver = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.type === "characterData") translateNode(mutation.target);
+                for (const node of mutation.addedNodes || []) translateNode(node);
+            }
+        });
+        window.__flotOnlineRussianUiObserver.observe(document.documentElement, {
+            childList: true,
+            characterData: true,
+            subtree: true,
+        });
+    }
+
+    if (isRussianProduct) {
         // Kodiak uses navigator.language for the first saved preference.
         // The language picker can still change it afterwards.
         try {
@@ -53,6 +95,7 @@
         } catch (error) {
             console.warn("Unable to set Russian default locale:", error);
         }
+        installRussianUiBridge();
     }
 
     if (!isYandex) return;
